@@ -1,0 +1,48 @@
+#######################################
+# Syntax Coloring Map For Ultrasound
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Talking_Display	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin	KEYWORD2
+loop	KEYWORD2
+registerOnDone	KEYWORD2
+registerOnCard	KEYWORD2
+registerOnError	KEYWORD2
+setVolume	KEYWORD2
+reset	KEYWORD2
+playFolderTrack	KEYWORD2
+getStatus	KEYWORD2
+setEnglish	KEYWORD2
+setWordTimeout	KEYWORD2
+say	KEYWORD2
+sayHundreds	KEYWORD2
+sayInt	KEYWORD2
+sayFloat	KEYWORD2
+sayTime	KEYWORD2
+sayDate	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+MOVETRESHOLD	LITERAL1
+SWIPEX	LITERAL1
+SWIPEY	LITERAL1
+CLICKLONG	LITERAL1
+DOUBLECLICK	LITERAL1
+SCREENX	LITERAL1
+SCREENY	LITERAL1
+MINPRESSURE	LITERAL1
+TS_MINX	LITERAL1
+TS_MAXX	LITERAL1
+TS_MINY	LITERAL1
+TS_MAXY	LITERAL1
