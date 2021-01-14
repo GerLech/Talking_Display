@@ -5,11 +5,11 @@ This library works with the DFPlayer Mini module, to generate speech output for 
 
 **void loop()**  Tthis function needs to be called within the main loop to reakt on messages from module
 
-**void registerOnDone(void (*callback)(uint16_t track))** Register a callback function which will be called if playing a track has finished
+**void registerOnDone(void (\*callback)(uint16_t track))** Register a callback function which will be called if playing a track has finished
 
-**void registerOnCard(void (*callback)(uint8_t event))** Register a callback funktion which will be called if card will be inserted or removed
+**void registerOnCard(void (\*callback)(uint8_t event))** Register a callback funktion which will be called if card will be inserted or removed
 
-**void registerOnError(void (*callback)(String msg))** Register a callback funktion which will be called if an error occured
+**void registerOnError(void (\*callback)(String msg))** Register a callback funktion which will be called if an error occured
 
 **void setVolume(uint8_t volume)** Set the volume. Values from 0 to 30 are allowed
 
