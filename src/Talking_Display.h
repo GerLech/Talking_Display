@@ -57,7 +57,7 @@
 #define WORD_CLOCK 202
 #define WORD_IS 203
 #define WORD_SECOND 204
-#define WORD_COMMA 205
+#define WORD_DOT 205
 #define WORD_TEMPERATURE 206
 #define WORD_OUTSIDE_TEMPERATURE 207
 #define WORD_DEGREE 208
@@ -259,7 +259,7 @@ public:
       dez = round(n*100);
     }
     sayInt(num);
-    say(WORD_COMMA);
+    say(WORD_DOT);
     say(dez);
   }
 
