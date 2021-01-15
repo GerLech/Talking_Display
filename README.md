@@ -35,7 +35,8 @@ This library works with the DFPlayer Mini module, to generate speech output for 
 
 **void sayDate(struct tm * s_time, boolean weekday = true, boolean sayYear = true)** Speak the date specified by the tm structure. Switching weekday and year off can be selected by parameter
 
-##Vocabulary
+## Vocabulary
+
 To use the library you need a Micro SD Card with MP3 files containing the vocabulary. The vocabulary is in two folders. One named 00 containing the English vocabulary and one named 01 containing the German vocabulary. All the required MP3 files are contained in the library in a ZIP file named words.zip. The filenames, words and predefine names are listed in the following table:
 
 |File from|File to|Word English|Word German|Constant|
@@ -53,7 +54,7 @@ To use the library you need a Micro SD Card with MP3 files containing the vocabu
 |0202.mp3|0202.mp3|O clock|Uhr|WORD_CLOCK|
 |0203.mp3|0203.mp3|Is|Ist|WORD_IS|
 |0204.mp3|0204.mp3|Second|Sekunden|WORD_SECOND|
-|0205.mp3|0205.mp3|Dot|Komma|WORD_COMMA|
+|0205.mp3|0205.mp3|Dot|Komma|WORD_DOT|
 |0206.mp3|0206.mp3|Temperature|Temperatur|WORD_TEMPERATURE|
 |0207.mp3|0207.mp3|Outside Temperature|Aussentemperatur|WORD_OUTSIDE_TEMPERATURE|
 |0208.mp3|0208.mp3|Degree|Grad|WORD_DEGREE|
