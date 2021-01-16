@@ -204,46 +204,50 @@ public:
     uint16_t h = number / 100;
     uint16_t e = number%100;
     if (h>0) say(WORD_HUNDREDS+h);
-    say(e);
+    if (e>0) say(e);
   }
 
   //speaks any 32 bit integer
   void sayInt(int32_t number) {
-   boolean minus = (number < 0);
-   if (minus) number *= -1;
-   uint16_t einer = number%1000;
-   number /= 1000;
-   uint16_t tausender = number%1000;
-   number /= 1000;
-   uint16_t millionen = number%1000;
-   number /= 1000;
-   uint16_t milliarden = number%1000;
-   if (minus) say(WORD_MINUS);
-   if (milliarden > 0) {
-    if (milliarden == 1) {
-      say(WORD_BILLION+1);
-    } else  {
-      sayHundreds(milliarden);
-      say(WORD_BILLION);
-    }
+   if (number == 0) {
+     say(0);
+   } else {
+     boolean minus = (number < 0);
+     if (minus) number *= -1;
+     uint16_t einer = number%1000;
+     number /= 1000;
+     uint16_t tausender = number%1000;
+     number /= 1000;
+     uint16_t millionen = number%1000;
+     number /= 1000;
+     uint16_t milliarden = number%1000;
+     if (minus) say(WORD_MINUS);
+     if (milliarden > 0) {
+      if (milliarden == 1) {
+        say(WORD_BILLION+1);
+      } else  {
+        sayHundreds(milliarden);
+        say(WORD_BILLION);
+      }
+     }
+     if (millionen > 0) {
+      if (millionen == 1) {
+        say(WORD_MILLION+1);
+      } else  {
+        sayHundreds(millionen);
+        say(WORD_MILLION);
+      }
+     }
+     if (tausender > 0) {
+      if (tausender == 1) {
+        say(WORD_TOUSEND+1);
+      } else  {
+        sayHundreds(tausender);
+        say(WORD_TOUSEND);
+      }
+     }
+     sayHundreds(einer);
    }
-   if (millionen > 0) {
-    if (millionen == 1) {
-      say(WORD_MILLION+1);
-    } else  {
-      sayHundreds(millionen);
-      say(WORD_MILLION);
-    }
-   }
-   if (tausender > 0) {
-    if (tausender == 1) {
-      say(WORD_TOUSEND+1);
-    } else  {
-      sayHundreds(tausender);
-      say(WORD_TOUSEND);
-    }
-   }
-   sayHundreds(einer);
   }
 
   //speaks a float number with 1 or two decimals
@@ -251,7 +255,7 @@ public:
   void sayFloat(float number, uint8_t decimals = 2) {
     int32_t num = (int)number;
     float n = number - (float)num;
-    Serial.println(n);
+    Serial.println(num);
     int16_t dez = 0;
     if (decimals < 2) {
       dez = round(n*10);
@@ -351,7 +355,7 @@ private:
   boolean waitForEnd(uint32_t timeout) {
     uint32_t tim = millis();
     uint16_t st;
-    delay(100);
+    delay(20);
     do {
       delay(20);
       st=getStatus();
