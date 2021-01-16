@@ -1,7 +1,7 @@
 /*
 ||
 || @file Talking_Display.h
-|| @version 1.0
+|| @version 1.1
 || @author Gerald Lechner
 || @contact lechge@gmail.com
 ||
