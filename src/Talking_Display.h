@@ -255,7 +255,6 @@ public:
   void sayFloat(float number, uint8_t decimals = 2) {
     int32_t num = (int)number;
     float n = number - (float)num;
-    Serial.println(num);
     int16_t dez = 0;
     if (decimals < 2) {
       dez = round(n*10);
