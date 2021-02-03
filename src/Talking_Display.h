@@ -1,7 +1,7 @@
 /*
 ||
 || @file Talking_Display.h
-|| @version 1.1
+|| @version 1.2
 || @author Gerald Lechner
 || @contact lechge@gmail.com
 ||
@@ -354,7 +354,14 @@ private:
   boolean waitForEnd(uint32_t timeout) {
     uint32_t tim = millis();
     uint16_t st;
-    delay(20);
+    st=getStatus();
+    if (st == 512) {
+      do {
+        delay(20);
+        st=getStatus();
+      }
+      while ((st == 512) && ((millis()-tim) < (timeout*1000)));
+    }
     do {
       delay(20);
       st=getStatus();
