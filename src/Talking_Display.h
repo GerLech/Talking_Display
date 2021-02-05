@@ -1,7 +1,7 @@
 /*
 ||
 || @file Talking_Display.h
-|| @version 1.2
+|| @version 1.3
 || @author Gerald Lechner
 || @contact lechge@gmail.com
 ||
@@ -99,10 +99,12 @@ enum DfMp3_Error
 template<class T_SERIAL> class Talking_Display {
 public:
   //initializer
-  Talking_Display(T_SERIAL& serial) :
+  Talking_Display(T_SERIAL& serial, uint8_t busy = 0) :
       _serial(serial),
-      _isOnline(false)
+      _isOnline(false),
+      _busy(busy)
   {
+    if (_busy > 0) pinMode(_busy,INPUT);
   }
   //start working send reset command and wait for an answer
   bool begin(unsigned long baud = 9600)
@@ -196,6 +198,7 @@ public:
   void say(uint16_t track) {
     uint8_t folder = _english?0:1;
     playFolderTrack(folder, track);
+    delay(400);
     waitForEnd(_wordTimeout);
   }
 
@@ -258,8 +261,14 @@ public:
     int16_t dez = 0;
     if (decimals < 2) {
       dez = round(n*10);
+      if (dez==10) {
+        dez = 0; num++;
+      }
     } else {
       dez = round(n*100);
+      if (dez==100) {
+        dez = 0; num++;
+      }
     }
     sayInt(num);
     say(WORD_DOT);
@@ -347,6 +356,7 @@ private:
   uint16_t _lastSendSpace = 0;
   boolean _english = false;
   uint32_t _wordTimeout = 5;
+  uint8_t _busy;
   void(*_onDone)(uint16_t track) = NULL;
   void(*_onSource)(uint8_t event) = NULL;
   void(*_onError)(String message) = NULL;
@@ -354,20 +364,42 @@ private:
   boolean waitForEnd(uint32_t timeout) {
     uint32_t tim = millis();
     uint16_t st;
-    st=getStatus();
-    if (st == 512) {
+    uint8_t b;
+    if (_busy == 0) {
+      st=getStatus();
+      if (st == 512) {
+        do {
+          delay(20);
+          yield();
+          st=getStatus();
+        }
+        while ((st == 512) && ((millis()-tim) < (timeout*1000)));
+      }
       do {
         delay(20);
+        yield();
         st=getStatus();
       }
-      while ((st == 512) && ((millis()-tim) < (timeout*1000)));
+      while ((st != 512) && (st != 0) && ((millis()-tim) < (timeout*1000)));
+      return (st == 512);
+    } else {
+      b = digitalRead(_busy);
+      if (b != 0) {
+        do {
+          yield();
+          delay(5);
+          b=digitalRead(_busy);
+        }
+        while ((b!=0) && ((millis()-tim) < (timeout*1000)));
+      }
+      do {
+        delay(5);
+        yield();
+        b=digitalRead(_busy);
+      }
+      while ((b==0) && ((millis()-tim) < (timeout*1000)));
+      return (b != 0);
     }
-    do {
-      delay(20);
-      st=getStatus();
-    }
-    while ((st != 512) && ((millis()-tim) < (timeout*1000)));
-    return (st == 512);
   }
 
   void drainResponses()
@@ -423,7 +455,6 @@ private:
       {
           // we use readBytes as it gives us the standard timeout
           read = _serial.readBytes(&(in[DfMp3_Packet_StartCode]), 1);
-
           if (read != 1)
           {
               // nothing read
