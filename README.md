@@ -2,7 +2,8 @@
 This library works with the DFPlayer Mini module, to generate speech output for numbers, dates, times and a number of special words. The library require an instance of SoftwareSerial or HardwareSerial for communication with the module. The library can be used with any hardware package. The following functions can be used:
 
 The constructor
-**Talking_Display(T_SERIAL& serial, uint8_t busy = 0) The first parameter points to the serial interface for communication with DFPlayer, the second parameter is the pin number to read the busy line from DFPlayer or 0 (default) if end detection should be done by status.
+
+**Talking_Display(T_SERIAL& serial, uint8_t busy = 0)** The first parameter points to the serial interface for communication with DFPlayer, the second parameter is the pin number to read the busy line from DFPlayer or 0 (default) if end detection should be done by status.
 
 **void begin(unsigned long baud = 9600)** Starts the instance, send reset command and wait for an answer
 
