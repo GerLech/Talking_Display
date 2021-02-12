@@ -1,7 +1,7 @@
 /*
 ||
 || @file Talking_Display.h
-|| @version 1.3
+|| @version 1.4
 || @author Gerald Lechner
 || @contact lechge@gmail.com
 ||
@@ -283,6 +283,7 @@ public:
        ampm = WORD_PM;
        hour = hour - 12;
      }
+     if (hour == 0) hour = 12;
      say(hour);
      if (_english) {
        delay(200);
