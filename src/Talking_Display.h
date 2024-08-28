@@ -1,7 +1,7 @@
 /*
 ||
 || @file Talking_Display.h
-|| @version 1.4
+|| @version 1.5
 || @author Gerald Lechner
 || @contact lechge@gmail.com
 ||
@@ -258,21 +258,32 @@ public:
   void sayFloat(float number, uint8_t decimals = 2) {
     int32_t num = (int)number;
     float n = number - (float)num;
-    int16_t dez = 0;
-    if (decimals < 2) {
-      dez = round(n*10);
-      if (dez==10) {
-        dez = 0; num++;
+    if (n<0) n = n * -1;
+    int dez = 0;
+    if ((decimals == 2) && (n >= 0.1) && (n <= 0.95)) {
+      dez = round(n * 100);
+      sayInt(num);
+      say(WORD_DOT);
+      sayInt(dez);
+    }
+    else
+    {
+      uint32_t d = 1;
+      for (uint8_t i = 0; i<decimals; i++) d = d * 10;
+      dez = round(n * d);
+      if (dez == d) {
+        dez = 0;
+        num ++;
       }
-    } else {
-      dez = round(n*100);
-      if (dez==100) {
-        dez = 0; num++;
+      sayInt(num);
+      say(WORD_DOT);
+      d = d/10;
+      for (uint8_t i = 0; i<decimals; i++) {
+        say(dez / d);
+        dez = dez % d;
+        d = d/10;
       }
     }
-    sayInt(num);
-    say(WORD_DOT);
-    say(dez);
   }
 
   //say a time using 24 hours and switching seconds off can be done by parameter
